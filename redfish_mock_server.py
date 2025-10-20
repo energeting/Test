@@ -1,13 +1,9 @@
-"""
-Mock сервер для тестирования Redfish API без реального BMC
-"""
 
 from flask import Flask, jsonify, request
 import random
 
 app = Flask(__name__)
 
-# Mock данные
 MOCK_SYSTEM_INFO = {
     "@odata.type": "#ComputerSystem.v1_16_0.ComputerSystem",
     "Id": "system",
@@ -63,7 +59,6 @@ def reset_system():
     reset_type = reset_data.get('ResetType')
     
     if reset_type in ['On', 'ForceOff', 'GracefulShutdown']:
-        # Обновляем состояние системы
         MOCK_SYSTEM_INFO['PowerState'] = 'On' if reset_type == 'On' else 'Off'
         return jsonify({"message": "Reset action completed"}), 202
     else:
@@ -72,11 +67,9 @@ def reset_system():
 @app.route('/redfish/v1/Chassis/chassis/Thermal', methods=['GET'])
 def get_thermal():
     """Mock данных о температуре"""
-    # Добавляем небольшую случайность в показания
     for sensor in MOCK_THERMAL_DATA['Temperatures']:
-        if random.random() > 0.7:  # 30% chance to change slightly
+        if random.random() > 0.7:  
             sensor['ReadingCelsius'] += random.randint(-2, 2)
-            # Ограничиваем в разумных пределах
             sensor['ReadingCelsius'] = max(20, min(80, sensor['ReadingCelsius']))
     
     return jsonify(MOCK_THERMAL_DATA)
