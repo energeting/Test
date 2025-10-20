@@ -1,6 +1,3 @@
-"""
-Простой тест подключения к Redfish API
-"""
 
 import requests
 from test.config import BMC_CONFIG
