@@ -1,0 +1,12 @@
+pytest
+pytest-html
+pytest-xdist
+requests
+urllib3
+locust
+selenium
+webdriver-manager
+bandit
+safety
+docker
+PyYAML
