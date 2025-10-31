@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   jenkins:
@@ -19,7 +19,7 @@ services:
       - jenkins-net
 
   qemu-openbmc:
-    image: openbmc/qemu:latest
+    image: openbmc/qemu-arm-romulus:latest
     container_name: qemu-openbmc
     privileged: true
     ports:
@@ -28,7 +28,15 @@ services:
     networks:
       - jenkins-net
     healthcheck:
-      test: ["CMD", "curl", "-k", "-u", "root:0penBmc", "https://localhost:2443/redfish/v1/"]
+      test:
+        [
+          "CMD",
+          "curl",
+          "-k",
+          "-u",
+          "root:0penBmc",
+          "https://localhost:2443/redfish/v1/",
+        ]
       interval: 30s
       timeout: 10s
       retries: 5
