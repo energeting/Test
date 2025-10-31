@@ -1,4 +1,3 @@
-
 services:
   jenkins:
     image: jenkins/jenkins:lts-jdk11
@@ -18,7 +17,7 @@ services:
       - jenkins-net
 
   qemu-openbmc:
-    image: openbmc/qemu-arm-romulus:latest
+    image: ghcr.io/openbmc/qemu-x86:master-5591-g6d9f86c8d7
     container_name: qemu-openbmc
     privileged: true
     ports:
@@ -27,15 +26,7 @@ services:
     networks:
       - jenkins-net
     healthcheck:
-      test:
-        [
-          "CMD",
-          "curl",
-          "-k",
-          "-u",
-          "root:0penBmc",
-          "https://localhost:2443/redfish/v1/",
-        ]
+      test: ["CMD", "curl", "-k", "-u", "root:0penBmc", "https://localhost:2443/redfish/v1/"]
       interval: 30s
       timeout: 10s
       retries: 5
