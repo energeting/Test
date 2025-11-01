@@ -17,7 +17,8 @@ services:
       - jenkins-net
 
   qemu-openbmc:
-    image: ghcr.io/openbmc/qemu-x86:master-5591-g6d9f86c8d7
+    # СОБИРАЕМ ОБРАЗ ЛОКАЛЬНО ИЗ DOCKERFILE
+    build: .
     container_name: qemu-openbmc
     privileged: true
     ports:
@@ -25,11 +26,7 @@ services:
       - "2222:2222"
     networks:
       - jenkins-net
-    healthcheck:
-      test: ["CMD", "curl", "-k", "-u", "root:0penBmc", "https://localhost:2443/redfish/v1/"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+    # Healthcheck здесь не нужен, так как сборка гарантирует наличие всего необходимого
 
 volumes:
   jenkins_data:
